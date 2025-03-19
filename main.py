@@ -10,6 +10,7 @@ def display_graph(G, edge_labels=None):
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
     plt.show()
 
+# Logic for Question 1
 def question1():
     graph_dict = {
         "A": {"B", "F", "E"},
@@ -38,6 +39,7 @@ def question1():
     print(f'DFS Nodes: {dfs.nodes}')
     print(f'BFS Nodes: {bfs.nodes}')
 
+# Logic for Question 2
 def question2():
     graph_dict = {
         1: {3},
@@ -90,7 +92,7 @@ def question2():
     plt.show()
 
 
-
+# Logic for Question 3
 def question3():
     graph_dict = {
         "A": {"B": {"weight": 22}, "C": {"weight": 9}, "D": {"weight": 12}},
@@ -106,28 +108,33 @@ def question3():
 
     G = nx.Graph(graph_dict)
 
-    # Dijkstra Shortest Path Tree
+    ### Dijkstra Shortest Path Tree
     source = 'A'
     pred, _ = nx.dijkstra_predecessor_and_distance(G, source)
 
+    # Generate the SPT graph
     T = nx.Graph()
     for node, predecessors in pred.items():
         for pred_node in predecessors:
             T.add_edge(pred_node, node, weight=G[pred_node][node]['weight'])
 
+    # Create the edge labels for the SPT graph
     pos = nx.spring_layout(T)
     edge_labels = {(u, v): d['weight'] for u, v, d in T.edges(data=True)}
 
+    # Draw the SPT graph
     plt.figure(figsize=(6, 4))
     nx.draw(T, pos, with_labels=True, node_color='lightblue', edge_color='grey', node_size=500, font_size=12, font_weight='bold')
     nx.draw_networkx_edge_labels(T, pos, edge_labels=edge_labels, font_size=10)
 
+    # Create the SPT graph title and show it
     plt.title("Shortest Path Tree")
     plt.show()
 
-    # Minimum Spanning Tree
+    ### Minimum Spanning Tree
     T = nx.minimum_spanning_tree(G)
 
+    # Configure the MST Graph for display
     pos = nx.spring_layout(T)
     nx.draw_networkx_nodes(T, pos, node_color='lightblue', node_size=500)
     nx.draw_networkx_edges(T, pos, edge_color='grey')
@@ -135,7 +142,8 @@ def question3():
     nx.draw_networkx_edge_labels(
         T, pos, edge_labels={(u, v): d["weight"] for u, v, d in T.edges(data=True)}, font_size=10
     )
-    # nx.draw_networkx_edges(T, pos, edge_color='green', width=2)
+
+    # Disable axis, add title, and show MST graph
     plt.axis('off')
     plt.title("Minimum Spanning Tree")
     plt.show()
