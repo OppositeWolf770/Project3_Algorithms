@@ -52,7 +52,35 @@ def question2():
 
     G = nx.DiGraph(graph_dict)
 
-    # display_graph(G)
+    # Find strongly connected components
+    sccs = list(nx.strongly_connected_components(G))
+    print("Strongly Connected Components:", sccs)
+
+    # Build the meta graph (condensed graph)
+    meta_graph = nx.condensation(G)
+
+    # Topologically sort the meta graph
+    topological_order = list(nx.topological_sort(meta_graph))
+    print("Topological Order of the Meta Graph:", topological_order)
+
+    # Relabel meta graph nodes with SCC contents
+    scc_labels = {i: ','.join(map(str, sorted(scc))) for i, scc in enumerate(sccs)}
+    meta_graph = nx.relabel_nodes(meta_graph, scc_labels)
+
+    # Draw the original graph
+    plt.figure(figsize=(10, 5))
+    plt.subplot(1, 2, 1)
+    nx.draw(G, with_labels=True, node_color='lightblue', node_size=700, font_weight='bold')
+    plt.title("Original Graph")
+
+    # Draw the condensed meta graph with SCC labels
+    plt.subplot(1, 2, 2)
+    nx.draw(meta_graph, with_labels=True, node_color='lightgreen', node_size=700, font_weight='bold')
+    plt.title("Meta Graph (SCCs)")
+
+    plt.show()
+
+    
 
 def question3():
     graph_dict = {
@@ -93,6 +121,6 @@ def question3():
 
 if __name__ == "__main__":
     # question1()
-    # question2()
-    question3()
+    question2()
+    # question3()
 
