@@ -1,7 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import functions as f
-from collections import deque
+
 
 def display_graph(G, edge_labels=None):
     pos = nx.spring_layout(G)
