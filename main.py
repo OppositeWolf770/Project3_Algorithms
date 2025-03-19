@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import functions as f
+from collections import deque
 
 def display_graph(G, edge_labels=None):
     pos = nx.spring_layout(G)
@@ -38,6 +39,29 @@ def question1():
 
     print(f'DFS Nodes: {dfs.nodes}')
     print(f'BFS Nodes: {bfs.nodes}')
+
+    start_node = 'A'
+    end_node = 'J'
+
+    dfs_path = list(nx.dfs_edges(G, source=start_node))
+    bfs_path = list(nx.bfs_edges(G, source=start_node))
+
+    def extract_path(edges, end_node):
+        path = []
+        for u, v in edges:
+            path.append(u)
+            if v == end_node:
+                path.append(v)
+                break
+        return path
+
+    dfs_path_nodes = extract_path(dfs_path, end_node)
+    bfs_path_nodes = extract_path(bfs_path, end_node)
+
+    print(f'DFS Path from {start_node} to {end_node}: {dfs_path_nodes}')
+
+    correct_bfs_path = f.bfs_path(G, start_node, end_node)
+    print(f'BFS Path from {start_node} to {end_node}: {correct_bfs_path}')
 
 # Logic for Question 2
 def question2():
