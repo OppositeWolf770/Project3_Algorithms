@@ -106,11 +106,39 @@ def question3():
 
     G = nx.Graph(graph_dict)
 
-    dijkstra_path = nx.single_source_dijkstra_path(G, 'A')
-    print("Dijkstra's path from A:", dijkstra_path)
+    # Dijkstra Shortest Path Tree
+    source = 'A'
+    pred, _ = nx.dijkstra_predecessor_and_distance(G, source)
 
-    # edge_labels = {(u, v): d['weight'] for u, v, d in G.edges(data=True)}
-    # display_graph(G, edge_labels)
+    T = nx.Graph()
+    for node, predecessors in pred.items():
+        for pred_node in predecessors:
+            T.add_edge(pred_node, node, weight=G[pred_node][node]['weight'])
+
+    pos = nx.spring_layout(T)
+    edge_labels = {(u, v): d['weight'] for u, v, d in T.edges(data=True)}
+
+    plt.figure(figsize=(6, 4))
+    nx.draw(T, pos, with_labels=True, node_color='lightblue', edge_color='grey', node_size=500, font_size=12, font_weight='bold')
+    nx.draw_networkx_edge_labels(T, pos, edge_labels=edge_labels, font_size=10)
+
+    plt.title("Shortest Path Tree")
+    plt.show()
+
+    # Minimum Spanning Tree
+    T = nx.minimum_spanning_tree(G)
+
+    pos = nx.spring_layout(T)
+    nx.draw_networkx_nodes(T, pos, node_color='lightblue', node_size=500)
+    nx.draw_networkx_edges(T, pos, edge_color='grey')
+    nx.draw_networkx_labels(T, pos, font_size=12, font_weight='bold', font_family='sans-serif')
+    nx.draw_networkx_edge_labels(
+        T, pos, edge_labels={(u, v): d["weight"] for u, v, d in T.edges(data=True)}, font_size=10
+    )
+    # nx.draw_networkx_edges(T, pos, edge_color='green', width=2)
+    plt.axis('off')
+    plt.title("Minimum Spanning Tree")
+    plt.show()
 
 if __name__ == "__main__":
     while True:
