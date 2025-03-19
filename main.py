@@ -67,6 +67,11 @@ def question2():
     topological_order = list(nx.topological_sort(meta_graph))
     print("Topological Order of the Meta Graph:", topological_order)
 
+    # Print the relationship between SCCs and DAG labels
+    print("SCC to DAG label mapping:")
+    for i, scc in enumerate(sccs):
+        print(f"DAG label {i}: {sorted(scc)}")
+
     # Relabel meta graph nodes with SCC contents
     scc_labels = {i: ','.join(map(str, sorted(scc))) for i, scc in enumerate(sccs)}
     meta_graph = nx.relabel_nodes(meta_graph, scc_labels)
