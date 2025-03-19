@@ -56,7 +56,6 @@ def question1():
         return path
 
     dfs_path_nodes = extract_path(dfs_path, end_node)
-    bfs_path_nodes = extract_path(bfs_path, end_node)
 
     print(f'DFS Path from {start_node} to {end_node}: {dfs_path_nodes}')
 
