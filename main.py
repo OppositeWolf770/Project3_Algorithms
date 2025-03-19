@@ -32,7 +32,11 @@ def question1():
 
     G = nx.Graph(graph_dict)
 
-    display_graph(G)
+    dfs = nx.dfs_tree(G, 'A')
+    bfs = nx.bfs_tree(G, 'A')
+
+    print(f'DFS Nodes: {dfs.nodes}')
+    print(f'BFS Nodes: {bfs.nodes}')
 
 def question2():
     graph_dict = {
@@ -80,7 +84,7 @@ def question2():
 
     plt.show()
 
-    
+
 
 def question3():
     graph_dict = {
@@ -97,30 +101,21 @@ def question3():
 
     G = nx.Graph(graph_dict)
 
-    ############### BFS ###############
-    # bfs_result = f.bfs(G, 'A')
-    # print("BFS Traversal:", bfs_result)
+    dijkstra_path = nx.single_source_dijkstra_path(G, 'A')
+    print("Dijkstra's path from A:", dijkstra_path)
 
-    # Bellman-Ford algorithm
-    d, p = f.bellman_ford(G, "A")
-
-    print("Distances from A:", d)
-    print("Predecessors:", p)
-
-    ### Dijkstra's algorithm
-    # distances, paths = f.dijkstra(G, 'A')
-    #
-    # print("Shortest distances from A:", distances)
-    #
-    # print("Shortest paths:")
-    # for node, prev in paths.items():
-    #     print(f"{node} <= {prev}")
-
-    edge_labels = {(u, v): d['weight'] for u, v, d in G.edges(data=True)}
-    display_graph(G, edge_labels)
+    # edge_labels = {(u, v): d['weight'] for u, v, d in G.edges(data=True)}
+    # display_graph(G, edge_labels)
 
 if __name__ == "__main__":
-    # question1()
-    question2()
-    # question3()
+    while True:
+        choice = input("Select question to view (Q to quit):")
 
+        if choice == '1':
+            question1()
+        elif choice == '2':
+            question2()
+        elif choice == '3':
+            question3()
+        else:
+            quit()
